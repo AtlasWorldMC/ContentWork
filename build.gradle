@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'xyz.jpenilla.run-paper' version '2.1.0'
+}
+
+group = 'fr.atlasworld.contentwork'
+version = "${project_version}"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+tasks.register("setupServer") {
+    dependsOn(':core:reobfJar')
+    dependsOn(':core:buildTestPlugin')
+
+    doLast {
+        // Delete existing plugin JARs
+        delete "run/plugins/ContentWork-${project_version}.jar"
+        delete "run/plugins/ContentWork-${project_version}-test.jar"
+
+        // Copy Core Plugin
+        copy {
+            from "core/build/libs/ContentWork-${project_version}.jar"
+            into "run/plugins/"
+        }
+
+        // Copy Test Plugin
+        copy {
+            from "core/build/libs/ContentWork-${project_version}-test.jar"
+            into "run/plugins/"
+        }
+    }
+}
+
+tasks {
+    runServer {
+        dependsOn(setupServer)
+        minecraftVersion("1.20.1")
+    }
+
+    runPaper {
+        disablePluginJarDetection()
+    }
+}
+
+allprojects {
+
+}

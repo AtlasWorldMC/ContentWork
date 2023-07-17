@@ -1,0 +1,8 @@
+name: ContentWork
+version: '1.0.0'
+main: fr.atlasworld.contentwork.ContentWork
+api-version: 1.20
+authors: [ RaftDev ]
+description: Java API to easily add item, blocks and entity to the game
+website: https://atlasworld.fr
+load: STARTUP

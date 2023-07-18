@@ -1,12 +1,13 @@
 package fr.atlasworld.contentwork.api.registering.registry;
 
 import com.google.common.collect.BiMap;
+import fr.atlasworld.contentwork.api.registering.event.RegisterEvent;
 import org.bukkit.NamespacedKey;
 
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class SimpleRegistry<T> implements Registry<T> {
+public abstract class SimpleRegistry<T> implements Registry<T> {
     protected final BiMap<NamespacedKey, T> registryItems;
 
     public SimpleRegistry(BiMap<NamespacedKey, T> registryItems) {
@@ -14,7 +15,7 @@ public class SimpleRegistry<T> implements Registry<T> {
     }
 
     @Override
-    public T register(NamespacedKey key, T obj) {
+    public T register(NamespacedKey key, T obj, RegisterEvent<T> event) {
         return this.registryItems.putIfAbsent(key, obj);
     }
 

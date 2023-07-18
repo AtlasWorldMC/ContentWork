@@ -2,7 +2,7 @@ package fr.atlasworld.contentwork.test.item;
 
 import fr.atlasworld.contentwork.api.common.item.Item;
 import fr.atlasworld.contentwork.api.registering.event.RegisterItemEvent;
-import fr.atlasworld.contentwork.api.registering.registry.Register;
+import fr.atlasworld.contentwork.api.registering.Register;
 import fr.atlasworld.contentwork.test.ContentWorkTest;
 import io.papermc.paper.inventory.ItemRarity;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ public class TestItems implements Listener {
 
     @EventHandler
     public void register(RegisterItemEvent event) {
-        ITEMS.register(event.getRegistry());
+        ITEMS.register(event);
         ContentWorkTest.plugin.getSLF4JLogger().info("Item registered!");
     }
 }

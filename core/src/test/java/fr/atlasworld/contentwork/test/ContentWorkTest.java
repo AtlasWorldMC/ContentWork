@@ -1,7 +1,12 @@
 package fr.atlasworld.contentwork.test;
 
+import fr.atlasworld.contentwork.api.common.item.Item;
+import fr.atlasworld.contentwork.api.registering.registry.Registry;
+import fr.atlasworld.contentwork.api.registering.registry.RegistryManager;
 import fr.atlasworld.contentwork.test.item.TestItems;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 

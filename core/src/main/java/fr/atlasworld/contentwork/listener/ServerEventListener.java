@@ -3,6 +3,7 @@ package fr.atlasworld.contentwork.listener;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import fr.atlasworld.contentwork.ContentWork;
 import fr.atlasworld.contentwork.command.GiveCommand;
+import fr.atlasworld.contentwork.datagen.DataGenManager;
 import fr.atlasworld.contentwork.registering.DefaultRegistries;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
@@ -23,7 +24,12 @@ public class ServerEventListener implements Listener {
 
         //Register command
         CraftServer server = (CraftServer) Bukkit.getServer();
-
         GiveCommand.register(server.getServer().getCommands().getDispatcher());
+
+        //Start DataGeneration
+        DataGenManager dataGenManager = new DataGenManager();
+        ContentWork.logger.info("[DataGen] Collecting plugins...");
+        dataGenManager.collectPlugins();
+        ContentWork.logger.info("[DataGen] Found {} plugins to load!", dataGenManager.getDataGenPlugins().size());
     }
 }

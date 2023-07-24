@@ -21,7 +21,7 @@ public class Register<T> {
         this.entries = new HashMap<>();
     }
 
-    public T register(String key, Supplier<T> supplier) {
+    public RegistryObject<T> register(String key, Supplier<T> supplier) {
         if (hasSeenRegistry) {
             throw new RegisteringException("Cannot register new entries after the register event!");
         }
@@ -30,7 +30,7 @@ public class Register<T> {
         T entry = supplier.get();
 
         this.entries.put(nameKey, entry);
-        return entry;
+        return new RegistryObject<>(entry, nameKey);
     }
 
     public void register(RegisterEvent<T> event) {

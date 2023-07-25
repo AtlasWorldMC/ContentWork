@@ -3,7 +3,6 @@ package fr.atlasworld.contentwork.registering.registries;
 import com.google.common.collect.HashBiMap;
 import fr.atlasworld.contentwork.api.common.item.Item;
 import fr.atlasworld.contentwork.api.registering.event.RegisterEvent;
-import fr.atlasworld.contentwork.api.registering.registry.IItemRegistry;
 import fr.atlasworld.contentwork.api.registering.registry.SimpleRegistry;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

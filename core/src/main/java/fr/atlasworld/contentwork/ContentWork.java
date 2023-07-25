@@ -21,7 +21,6 @@ public class ContentWork extends JavaPlugin {
 
         //Register Events
         Bukkit.getPluginManager().registerEvents(new ServerEventListener(), this);
-
     }
 
     @Override

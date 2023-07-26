@@ -1,4 +1,4 @@
-package fr.atlasworld.contentwork.data;
+package fr.atlasworld.contentwork.data.generator;
 
 import fr.atlasworld.contentwork.api.data.generator.FilePipeline;
 import fr.atlasworld.contentwork.api.data.model.builder.ModelBuilder;
@@ -19,6 +19,11 @@ public class FilePipelineImpl implements FilePipeline {
     }
 
     @Override
+    public Plugin getPlugin() {
+        return this.plugin;
+    }
+
+    @Override
     public boolean fileExists(NamespacedKey location) {
         return new File(this.directory, location.getKey()).exists();
     }
@@ -26,8 +31,8 @@ public class FilePipelineImpl implements FilePipeline {
     @Override
     public void saveModels(Map<NamespacedKey, ModelBuilder<?>> models) {
         models.forEach((key, modelBuilder) -> {
-            File file = new File(this.directory, key.getKey());
-            JsonFileLoader loader = new JsonFileLoader(file);
+            File file = new File(this.directory, key.getKey() + ".json");
+            JsonFileLoader loader = new JsonFileLoader(file, true);
 
             if (!loader.fileExists()) {
                 loader.createFile();

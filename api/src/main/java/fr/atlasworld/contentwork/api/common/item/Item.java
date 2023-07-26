@@ -29,6 +29,7 @@ public class Item {
         ItemStack item = new ItemStack(this.parent, count);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.translatable("item." + key.getNamespace() + "." + key.getKey()).decoration(TextDecoration.ITALIC, false));
+        meta.setCustomModelData(1);
         item.setItemMeta(meta);
 
         return item;

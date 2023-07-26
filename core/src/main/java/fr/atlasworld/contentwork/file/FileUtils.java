@@ -2,14 +2,14 @@ package fr.atlasworld.contentwork.file;
 
 import fr.atlasworld.contentwork.ContentWork;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.annotation.Nullable;
+import java.io.*;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 public class FileUtils {
@@ -33,12 +33,84 @@ public class FileUtils {
             }
         } catch (NoSuchAlgorithmException | IOException e) {
             ContentWork.logger.error("Unable to get file hash(SHA-1) for {}", file, e);
-            return null;
+            return "";
         }
     }
 
     public static boolean validateFileSha1(File file, String sha1) {
         return getFileSha1(file).equals(sha1);
+    }
+
+    public static boolean archiveContainsFile(File archive, String file) {
+        if (!archive.isFile()) {
+            return false;
+        }
+
+        try (ZipFile zipFile = new ZipFile(archive)) {
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
+                if (entry.getName().equalsIgnoreCase(file) && !entry.isDirectory()) {
+                    return true;
+                }
+            }
+        } catch (IOException ignored) {}
+        return false;
+    }
+
+    public static boolean archiveContainsDirectory(File archive, String directory) {
+        if (!archive.isFile()) {
+            return false;
+        }
+
+        try (ZipFile zipFile = new ZipFile(archive)) {
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
+                if (entry.getName().equalsIgnoreCase(directory) && entry.isDirectory()) {
+                    return true;
+                }
+            }
+        } catch (IOException ignored) {}
+        return false;
+    }
+
+    public static void extractArchive(File archive, File dest, String root) throws IOException {
+        try (ZipFile zipFile = new ZipFile(archive)) {
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
+
+                if (entry.getName().startsWith(root) && !entry.isDirectory()) {
+                    String relativePath = entry.getName().substring(root.length());
+                    File outputFile = new File(dest.toString(), relativePath);
+
+                    if (!outputFile.getParentFile().exists()) {
+                        outputFile.getParentFile().mkdirs();
+                    }
+
+                    try (InputStream inputStream = zipFile.getInputStream(entry);
+                         OutputStream outputStream = new FileOutputStream(outputFile)) {
+                        byte[] buffer = new byte[4096];
+                        int bytesRead;
+
+                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                            outputStream.write(buffer, 0, bytesRead);
+                        }
+                    }
+                }
+
+                if (entry.getName().startsWith(root) && entry.isDirectory()) {
+                    String relativePath = entry.getName().substring(root.length());
+                    File outputDir = new File(dest.toString(), relativePath);
+
+                    if (!outputDir.exists()) {
+                        outputDir.mkdirs();
+                    }
+                }
+            }
+        }
     }
 
     //Big thanks to Malfrador#0923 (https://github.com/Malfrador) for the working zip code!

@@ -1,4 +1,4 @@
-package fr.atlasworld.contentwork.data;
+package fr.atlasworld.contentwork.data.generator;
 
 import fr.atlasworld.contentwork.api.data.generator.DataGenerator;
 import fr.atlasworld.contentwork.api.data.generator.provider.DataProvider;

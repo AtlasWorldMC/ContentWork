@@ -14,7 +14,7 @@ public class TestItems implements Listener {
     private static final Register<Item> ITEMS = new Register<>(ContentWorkTest.plugin);
 
     public static final RegistryObject<Item> CUSTOM_ITEM = ITEMS.register("custom_item", () ->
-            new Item(Material.STICK, new Item.Properties().rarity(ItemRarity.RARE)));
+            new Item(Material.COMPASS, new Item.Properties().rarity(ItemRarity.RARE)));
 
 
     @EventHandler

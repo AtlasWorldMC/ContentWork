@@ -13,5 +13,6 @@ public class TestItemModelProvider extends ItemModelProvider {
     @Override
     public void generate(FilePipeline pipeline) {
         basicItem(TestItems.CUSTOM_ITEM, pipeline);
+        basicItem(TestItems.SAPPHIRE, pipeline);
     }
 }

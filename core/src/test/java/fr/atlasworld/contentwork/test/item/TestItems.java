@@ -16,6 +16,9 @@ public class TestItems implements Listener {
     public static final RegistryObject<Item> CUSTOM_ITEM = ITEMS.register("custom_item", () ->
             new Item(Material.COMPASS, new Item.Properties().rarity(ItemRarity.RARE)));
 
+    public static final RegistryObject<Item> SAPPHIRE = ITEMS.register("sapphire", () ->
+            new Item(Material.STICK, new Item.Properties().rarity(ItemRarity.COMMON)));
+
 
     @EventHandler
     public void register(RegisterItemEvent event) {

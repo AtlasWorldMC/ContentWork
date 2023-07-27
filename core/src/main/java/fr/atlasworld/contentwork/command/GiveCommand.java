@@ -7,6 +7,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import fr.atlasworld.contentwork.ContentWork;
+import fr.atlasworld.contentwork.api.common.item.CustomItemStack;
 import fr.atlasworld.contentwork.api.common.item.Item;
 import fr.atlasworld.contentwork.registering.DefaultRegistries;
 import net.kyori.adventure.text.Component;
@@ -54,7 +55,7 @@ public class GiveCommand {
         Item item = DefaultRegistries.ITEM.get(NamespacedKey.fromString(itemStr));
         int itemMaxStackSize = item.getParent().getMaxStackSize();
         int max = itemMaxStackSize * 100;
-        ItemStack itemStack = item.createItemStack(count);
+        ItemStack itemStack = CustomItemStack.create(item, count);
 
         if (count > max) {
             source.getBukkitSender().sendMessage(Component.translatable("commands.give.failed.toomanyitems", Component.text(max), itemStack.getItemMeta().displayName()).style(Style.style(TextColor.color(255, 33, 21))));
@@ -68,7 +69,7 @@ public class GiveCommand {
                                 int amount = Math.min(itemMaxStackSize, amountDrop);
                                 amountDrop -= amount;
 
-                                ItemStack stack = new ItemStack(value.getType(), amount);
+                                ItemStack stack = CustomItemStack.create(item, amount);
                                 target.getBukkitEntity().getWorld().dropItem(target.getBukkitEntity().getLocation(), stack);
                             }
                         });

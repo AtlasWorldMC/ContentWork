@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 
 public class DataManager {
     private static final String CACHE_FILE = "cache.json";
-    private static final String RESOURCE_PACK_CACHE = "resource-pack.zip";
-    private static final String DATA_PACK_CACHE = "data-pack.zip";
+    public static final String RESOURCE_PACK_CACHE = "resource-pack.zip";
+    public static final String DATA_PACK_CACHE = "data-pack.zip";
     private static final String TEMP_RESOURCE_PACK = "temp/resource-pack";
     private static final String TEMP_DATA_PACK = "temp/data-pack";
     private static final int RESOURCE_PACK_VERSION = 15; // Pack version for 1.20.1

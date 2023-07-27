@@ -21,20 +21,6 @@ public class Item {
         this.properties = properties;
     }
 
-    public ItemStack createItemStack(int count) {
-        Registry<Item> itemRegistry = Bukkit.getServicesManager().load(RegistryManager.class).getRegistry(new NamespacedKey("content_work", "item"));
-
-        NamespacedKey key = itemRegistry.getKey(this);
-
-        ItemStack item = new ItemStack(this.parent, count);
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.translatable("item." + key.getNamespace() + "." + key.getKey()).decoration(TextDecoration.ITALIC, false));
-        meta.setCustomModelData(1);
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
     public Material getParent() {
         return parent;
     }

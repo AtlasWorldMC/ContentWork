@@ -22,3 +22,18 @@ dependencies {
 
     implementation "com.mojang:brigadier:1.1.8"
 }
+
+jar {
+    archiveBaseName = 'ContentWork-api'
+}
+
+tasks.register('sourceJar', Jar) {
+    group 'build'
+    from sourceSets.main.allSource
+    archiveClassifier.set('sources')
+    archiveBaseName = 'ContentWork-api'
+}
+
+assemble {
+    dependsOn(sourceJar)
+}

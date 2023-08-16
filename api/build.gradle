@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'fr.atlasworld.contentwork.api'
@@ -30,4 +31,41 @@ tasks.register('sourceJar', Jar) {
 
 assemble {
     dependsOn(sourceJar)
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+
+            groupId = 'fr.atlasworld'
+            artifactId = 'contentwork-api'
+            version = project.version
+
+            from components.java
+            pom {
+                name = 'ContentWork'
+                description = 'PaperMC API to easily add item, blocks and entity to the game '
+                url = 'https://atlasworld.fr/'
+                licenses {
+                    license {
+                        name = 'MIT'
+                        url = 'https://github.com/AtlasWorldMC/ContentWork/blob/main/LICENSE'
+                    }
+                }
+            }
+
+            // Attach the sources jar
+            artifact sourceJar
+        }
+    }
+    repositories {
+        maven {
+            name 'AtlasWorld-Releases'
+            url 'https://maven.atlasworld.fr/repository/maven-releases/'
+            credentials {
+                username = "$maven_user"
+                password = "$maven_password"
+            }
+        }
+    }
 }

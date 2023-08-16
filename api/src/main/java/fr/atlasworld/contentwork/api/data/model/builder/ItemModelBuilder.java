@@ -5,6 +5,9 @@ import com.google.gson.JsonObject;
 import fr.atlasworld.contentwork.api.data.generator.FilePipeline;
 import org.bukkit.NamespacedKey;
 
+/**
+ * Item Model File Builder
+ */
 public class ItemModelBuilder extends ModelBuilder<ItemModelBuilder> {
     public ItemModelBuilder(NamespacedKey location, FilePipeline pipeline) {
         super(location, pipeline);
@@ -14,6 +17,11 @@ public class ItemModelBuilder extends ModelBuilder<ItemModelBuilder> {
         super(location, pipeline, json);
     }
 
+    /**
+     * Adds an override to the model file
+     * @param override model override
+     * @return model builder
+     */
     public ItemModelBuilder override(OverrideBuilder override) {
         if (!this.json.has("overrides")) {
             this.json.add("overrides", new JsonArray());

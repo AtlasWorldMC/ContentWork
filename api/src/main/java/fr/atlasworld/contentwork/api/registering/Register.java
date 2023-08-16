@@ -11,6 +11,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * Register Class, handles all the registering, adding elements to a registry should only happen through a Register
+ * @param <T> The Value type of the registry
+ */
 public class Register<T> {
     private final Plugin plugin;
     private final Map<NamespacedKey, T> entries;
@@ -21,8 +25,15 @@ public class Register<T> {
         this.entries = new HashMap<>();
     }
 
+    /**
+     * Registers a new element to add to the registry,
+     * throws a registering exception if the register is already registered
+     * @param key element key will be combined with the plugin namespace later
+     * @param supplier Supplier that supplies the element to register
+     * @return a RegistryObject containing the key and the element
+     */
     public RegistryObject<T> register(String key, Supplier<T> supplier) {
-        if (hasSeenRegistry) {
+        if (this.hasSeenRegistry) {
             throw new RegisteringException("Cannot register new entries after the register event!");
         }
 
@@ -33,6 +44,10 @@ public class Register<T> {
         return new RegistryObject<>(entry, nameKey);
     }
 
+    /**
+     * Registers all the register's saved elements to the registry
+     * @param event registry event
+     */
     public void register(RegisterEvent<T> event) {
         this.hasSeenRegistry = true;
         this.entries.forEach((key, value) -> event.getRegistry().register(key, value, event));

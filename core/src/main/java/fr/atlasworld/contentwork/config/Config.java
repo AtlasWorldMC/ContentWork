@@ -5,9 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.atlasworld.contentwork.file.FileManager;
 import fr.atlasworld.contentwork.file.loader.GsonFileLoader;
-import fr.atlasworld.contentwork.file.loader.JsonFileLoader;
 import org.bukkit.Bukkit;
-import org.checkerframework.checker.units.qual.C;
 
 public class Config {
     private final WebServerConfig webServer;
@@ -35,6 +33,7 @@ public class Config {
                         true,
                         8080,
                         "0.0.0.0",
+                        "0.0.0.0",
                         Bukkit.getServer().getMaxPlayers() / 2 //This should be enough for small servers
                 )));
             }
@@ -50,12 +49,14 @@ public class Config {
         private final boolean enabled;
         private final int port;
         private final String address;
+        private final String publicAddress;
         private final int threads;
 
-        private WebServerConfig(boolean enabled, int port, String address, int threads) {
+        private WebServerConfig(boolean enabled, int port, String address, String publicAddress, int threads) {
             this.enabled = enabled;
             this.port = port;
             this.address = address;
+            this.publicAddress = publicAddress;
             this.threads = threads;
         }
 
@@ -69,6 +70,10 @@ public class Config {
 
         public String getAddress() {
             return address;
+        }
+
+        public String getPublicAddress() {
+            return publicAddress;
         }
 
         public int getThreads() {

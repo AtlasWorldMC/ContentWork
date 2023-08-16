@@ -13,7 +13,7 @@ public class PlayerEventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Config config = Config.getConfig();
         if (config.getWebServer().isEnabled()) {
-            event.getPlayer().setResourcePack("http://" + config.getWebServer().getAddress() + ":" +
+            event.getPlayer().setResourcePack("http://" + config.getWebServer().getPublicAddress() + ":" +
                     config.getWebServer().getPort() + "/resource-pack",
                     FileUtils.getFileSha1(FileManager.getCacheDirectoryFile(DataManager.RESOURCE_PACK_CACHE)),
                     true);

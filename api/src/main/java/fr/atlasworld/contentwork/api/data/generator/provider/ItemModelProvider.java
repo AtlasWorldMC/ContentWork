@@ -9,16 +9,31 @@ import fr.atlasworld.contentwork.api.registering.RegistryObject;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.Plugin;
 
+/**
+ * Item Model Generator
+ */
 public abstract class ItemModelProvider extends ModelProvider<ItemModelBuilder> {
     public ItemModelProvider(Plugin plugin) {
         super(plugin, ItemModelBuilder::new);
     }
 
+    /**
+     * Create a basic item model
+     * @param item item
+     * @param pipeline the file pipeline
+     * @return model builder;
+     */
     @CanIgnoreReturnValue
     public ItemModelBuilder basicItem(RegistryObject<Item> item, FilePipeline pipeline) {
         return basicItem(item.getKey(), pipeline);
     }
 
+    /**
+     * Create a basic item model
+     * @param item item
+     * @param pipeline the file pipeline
+     * @return model builder;
+     */
     @CanIgnoreReturnValue
     public ItemModelBuilder basicItem(NamespacedKey item, FilePipeline pipeline) {
         return getBuilder(item.asString(), pipeline)

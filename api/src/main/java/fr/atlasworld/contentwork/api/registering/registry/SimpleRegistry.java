@@ -7,6 +7,11 @@ import org.bukkit.NamespacedKey;
 import java.util.Map;
 import java.util.stream.Stream;
 
+/**
+ * Simple Implementation of the Registry Interface
+ * @see Registry
+ * @param <T>
+ */
 public abstract class SimpleRegistry<T> implements Registry<T> {
     protected final BiMap<NamespacedKey, T> registryItems;
 

@@ -4,6 +4,9 @@ import com.google.gson.JsonObject;
 import fr.atlasworld.contentwork.api.data.generator.FilePipeline;
 import org.bukkit.NamespacedKey;
 
+/**
+ * Block Model File Builder
+ */
 public class BlockModelBuilder extends ModelBuilder<BlockModelBuilder> {
     public BlockModelBuilder(NamespacedKey location, FilePipeline pipeline) {
         super(location, pipeline);

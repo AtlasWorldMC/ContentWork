@@ -13,6 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+/**
+ * Generates models for the data generation
+ * @param <T> Simply for returning the correct inheritance
+ */
 public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataProvider {
     public static final String BLOCK_FOLDER = "block";
     public static final String ITEM_FOLDER = "item";
@@ -26,24 +30,46 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataPr
         this.factory = factory;
     }
 
-    public NamespacedKey pluginLocation(String name) {
-        return new NamespacedKey(this.plugin, name);
-    }
-
     public NamespacedKey minecraftLocation(String name) {
         return NamespacedKey.minecraft(name);
     }
 
+    /**
+     * Creates a model with an existing parent
+     * @param name name of the model file
+     * @param parent the model's parent file
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T withExistingParent(String name, String parent, FilePipeline pipeline) {
         return withExistingParent(name, minecraftLocation(parent), pipeline);
     }
 
+    /**
+     * Creates a model with an existing parent
+     * @param name name of the model file
+     * @param parent the model's parent file
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T withExistingParent(String name, NamespacedKey parent, FilePipeline pipeline) {
         return this.getBuilder(name, pipeline).parent(getExistingFile(parent, pipeline));
     }
 
+    /**
+     * Create a cube model
+     * @param name name of the model file
+     * @param pipeline the file pipeline
+     * @param down down texture location
+     * @param up up texture location
+     * @param north north texture location
+     * @param south south texture location
+     * @param east east texture location
+     * @param west west texture location
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T cube(String name, FilePipeline pipeline, NamespacedKey down, NamespacedKey up, NamespacedKey north, NamespacedKey south, NamespacedKey east, NamespacedKey west) {
         return withExistingParent(name, "cube", pipeline)
@@ -55,32 +81,81 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataPr
                 .texture("west", west);
     }
 
+    /**
+     * Create a model with a single texture
+     * @param name name of the model file
+     * @param parent the model's parent file
+     * @param texture the model's texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     private T singleTexture(String name, String parent, NamespacedKey texture, FilePipeline pipeline) {
         return singleTexture(name, minecraftLocation(parent), texture, pipeline);
     }
 
+    /**
+     * Create a model with a single texture
+     * @param name name of the model file
+     * @param parent the model's parent file
+     * @param texture the model's texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T singleTexture(String name, NamespacedKey parent, NamespacedKey texture, FilePipeline pipeline) {
         return singleTexture(name, parent, "texture", texture, pipeline);
     }
 
+    /**
+     * Create a model with a single texture
+     * @param name name of the model file
+     * @param parent the model's parent file
+     * @param textureKey the texture key
+     * @param texture the model's texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     private T singleTexture(String name, String parent, String textureKey, NamespacedKey texture, FilePipeline pipeline) {
         return singleTexture(name, minecraftLocation(parent), textureKey, texture, pipeline);
     }
 
+    /**
+     * Create a model with a single texture
+     * @param name name of the model file
+     * @param parent the model's parent file
+     * @param textureKey the texture key
+     * @param texture the model's texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T singleTexture(String name, NamespacedKey parent, String textureKey, NamespacedKey texture, FilePipeline pipeline) {
         return withExistingParent(name, parent, pipeline)
                 .texture(textureKey, texture);
     }
 
+    /**
+     * Create a cube model with one texture
+     * @param name name of the model file
+     * @param texture the model's texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T cubeAll(String name, NamespacedKey texture, FilePipeline pipeline) {
         return singleTexture(name, BLOCK_FOLDER + "/cube_all", "all", texture, pipeline);
     }
 
+    /**
+     * Create a cube model with a side and top texture being different
+     * @param name name of the model file
+     * @param side the top texture location
+     * @param top the side texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T cubeTop(String name, NamespacedKey side, NamespacedKey top, FilePipeline pipeline) {
         return withExistingParent(name, BLOCK_FOLDER + "/cube_top", pipeline)
@@ -88,6 +163,15 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataPr
                 .texture("top", top);
     }
 
+    /**
+     * Create a model with a side, bottom and top texture being different
+     * @param name name of the model file
+     * @param side the top texture location
+     * @param bottom the side texture location
+     * @param top the side texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     private T sideBottomTop(String name, String parent, NamespacedKey side, NamespacedKey bottom, NamespacedKey top, FilePipeline pipeline) {
         return withExistingParent(name, parent, pipeline)
@@ -96,6 +180,15 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataPr
                 .texture("top", top);
     }
 
+    /**
+     * Create a cube model with a side, bottom and top texture being different
+     * @param name name of the model file
+     * @param side the top texture location
+     * @param bottom the side texture location
+     * @param top the side texture location
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T cubeBottomTop(String name, NamespacedKey side, NamespacedKey bottom, NamespacedKey top, FilePipeline pipeline) {
         return sideBottomTop(name, BLOCK_FOLDER + "/cube_bottom_top", side, bottom, top, pipeline);
@@ -383,6 +476,12 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataPr
         return singleTexture(name, BLOCK_FOLDER + "/carpet", "wool", wool, pipeline);
     }
 
+    /**
+     * Creates a model builder
+     * @param path the path of the model
+     * @param pipeline the file pipeline
+     * @return model builder
+     */
     @CanIgnoreReturnValue
     public T getBuilder(@NotNull String path, @NotNull FilePipeline pipeline){
         Preconditions.checkNotNull(path, "Path must not be null!");
@@ -392,6 +491,12 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataPr
         return this.generatedModels.computeIfAbsent(outLocation, key -> this.factory.apply(key, pipeline));
     }
 
+    /**
+     * Creates a model file for an existing model file
+     * @param key model file location
+     * @param pipeline the file pipeline
+     * @return existing model file
+     */
     @CanIgnoreReturnValue
     public ModelFile.ExistingModelFile getExistingFile(NamespacedKey key, FilePipeline pipeline) {
         ModelFile.ExistingModelFile model = new ModelFile.ExistingModelFile(key, pipeline);
@@ -399,6 +504,10 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements DataPr
         return model;
     }
 
+    /**
+     * Starts the generation of the models
+     * @param pipeline the file pipeline
+     */
     @Override
     @SuppressWarnings("unchecked")
     public void run(FilePipeline pipeline) {

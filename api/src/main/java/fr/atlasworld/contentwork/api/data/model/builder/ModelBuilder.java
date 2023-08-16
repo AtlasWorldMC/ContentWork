@@ -8,6 +8,10 @@ import fr.atlasworld.contentwork.api.data.model.core.GuiLight;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Builder for minecraft's json model format
+ * @param <T> Simply for returning the correct inheritance
+ */
 public class ModelBuilder<T extends ModelBuilder<T>> extends ModelFile {
     protected final FilePipeline pipeline;
     protected final JsonObject json;

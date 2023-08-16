@@ -47,7 +47,3 @@ tasks {
         disablePluginJarDetection()
     }
 }
-
-allprojects {
-
-}

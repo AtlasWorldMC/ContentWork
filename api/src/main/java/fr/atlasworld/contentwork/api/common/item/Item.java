@@ -21,6 +21,10 @@ public class Item {
         this.properties = properties;
     }
 
+    /**
+     * Gets the parent material/item
+     * @return the parent material/item
+     */
     public Material getParent() {
         return parent;
     }
@@ -28,6 +32,12 @@ public class Item {
     public static class Properties {
         ItemRarity rarity = ItemRarity.COMMON;
 
+        /**
+         * Sets the rarity for the item
+         * @param rarity item rarity
+         * @return Instance of the properties
+         * @see ItemRarity
+         */
         public Item.Properties rarity(ItemRarity rarity) {
             this.rarity = rarity;
             return this;

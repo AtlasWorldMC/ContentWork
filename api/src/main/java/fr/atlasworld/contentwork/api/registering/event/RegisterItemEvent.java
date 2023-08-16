@@ -5,6 +5,9 @@ import fr.atlasworld.contentwork.api.registering.registry.Registry;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This event is triggered when the Item Registration Begins
+ */
 public class RegisterItemEvent extends RegisterEvent<Item> {
     private static final HandlerList handlers = new HandlerList();
 

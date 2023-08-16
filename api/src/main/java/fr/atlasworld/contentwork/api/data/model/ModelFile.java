@@ -4,6 +4,9 @@ import com.google.common.base.Preconditions;
 import fr.atlasworld.contentwork.api.data.generator.FilePipeline;
 import org.bukkit.NamespacedKey;
 
+/**
+ * Represents a minecraft model file
+ */
 public abstract class ModelFile {
     protected final NamespacedKey location;
 
@@ -11,17 +14,31 @@ public abstract class ModelFile {
         this.location = location;
     }
 
+    /**
+     * Returns if the file exists
+     * @return file exists
+     */
     public abstract boolean exists();
 
+    /**
+     * Returns the model file location
+     * @return model file location
+     */
     public NamespacedKey getLocation() {
         assertExistence();
         return location;
     }
 
+    /**
+     * Asserts file that the model file exists
+     */
     public void assertExistence() {
         Preconditions.checkState(exists(), "Model at %s does not exist", location);
     }
 
+    /**
+     * Basically a mock model file, it always returns true when exists function is triggered
+     */
     public static class UncheckedModelFile extends ModelFile {
 
         public UncheckedModelFile(String location) {
@@ -38,6 +55,9 @@ public abstract class ModelFile {
         }
     }
 
+    /**
+     * Represents an existing model file
+     */
     public static class ExistingModelFile extends ModelFile {
         private final FilePipeline pipeline;
 

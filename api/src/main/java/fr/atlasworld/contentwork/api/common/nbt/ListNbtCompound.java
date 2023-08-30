@@ -1,6 +1,5 @@
-package fr.atlasworld.contentwork.api.common.nbt.type;
+package fr.atlasworld.contentwork.api.common.nbt;
 
-import fr.atlasworld.contentwork.api.common.nbt.NbtTag;
 import fr.atlasworld.contentwork.api.utils.Duplicable;
 
 import java.util.UUID;
@@ -33,8 +32,6 @@ public interface ListNbtCompound extends NbtTag, Duplicable<ListNbtCompound> {
     void set(int i, int[] value);
     void set(int i, long[] value);
     void set(int i, NbtTag value);
-
-    NbtTag get(int index);
 
     String getString(int index);
     UUID getUUID(int index);

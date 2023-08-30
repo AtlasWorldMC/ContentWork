@@ -104,6 +104,8 @@ public class Request<T> {
             connection.setConnectTimeout(this.timeout);
             connection.setReadTimeout(this.timeout);
 
+            this.header.forEach(connection::setRequestProperty);
+
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (BufferedReader reader = new BufferedReader(

@@ -12,7 +12,7 @@ import java.net.InetSocketAddress;
 
 import java.util.concurrent.Executors;
 
-public class WebServer implements Closeable {
+public class WebServer {
     private final HttpServer server;
     private final Config config;
     private final File resourcePack;
@@ -34,7 +34,6 @@ public class WebServer implements Closeable {
         ContentWork.logger.info("WebServer started!");
     }
 
-    @Override
     public void close() {
         this.server.stop(0);
         ContentWork.logger.info("WebServer closed!");

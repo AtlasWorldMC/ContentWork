@@ -24,7 +24,6 @@ public interface NbtCompound extends NbtTag, Duplicable<NbtCompound> {
     NbtCompound put(String key, NbtTag value);
 
     //get
-    NbtTag get(String key);
     String getString(String key);
     UUID getUuid(String key);
     byte getByte(String key);
@@ -36,8 +35,8 @@ public interface NbtCompound extends NbtTag, Duplicable<NbtCompound> {
     double getDouble(String key);
     byte[] getByteArray(String key);
     int[] getIntArray(String key);
-    long[] getLongArray();
+    long[] getLongArray(String key);
+    ListNbtCompound getList(String key);
 
     Set<String> getKeys();
-    Stream<Map.Entry<String, NbtTag>> streamEntries();
 }

@@ -5,6 +5,7 @@ import fr.atlasworld.contentwork.api.common.item.Item;
 import fr.atlasworld.contentwork.registering.registries.ItemRegistry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minecraft.nbt.CompoundTag;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +30,22 @@ public class CustomItemHelperImpl implements CustomItemHelper {
         meta.setCustomModelData((int) this.registry.getCustomModel(itemKey));
         item.appendTooltip(meta.lore());
 
+        net.minecraft.world.item.ItemStack internalStack = CraftItemStack.asNMSCopy(stack);
+        CompoundTag tag = internalStack.getOrCreateTag();
+        tag.putString("customItem", itemKey.asString());
+
         stack.setItemMeta(meta);
         return stack;
+    }
+
+    @Override
+    public boolean isCustomItem(ItemStack stack) {
+        net.minecraft.world.item.ItemStack internalStack = CraftItemStack.asNMSCopy(stack);
+        CompoundTag tag = internalStack.getTag();
+        if (tag == null) {
+            return false;
+        }
+
+        return !tag.getString("customItem").isEmpty();
     }
 }

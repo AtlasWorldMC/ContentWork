@@ -58,7 +58,7 @@ public class GiveCommand {
         ItemStack itemStack = CustomItemStack.create(item, count);
 
         if (count > max) {
-            source.getBukkitSender().sendMessage(Component.translatable("commands.give.failed.toomanyitems", Component.text(max), itemStack.getItemMeta().displayName()).style(Style.style(TextColor.color(255, 33, 21))));
+            source.getBukkitSender().sendMessage(Component.translatable("commands.give.failed.toomanyitems", Component.text(max), itemStack.displayName()).style(Style.style(TextColor.color(255, 33, 21))));
             return 0;
         } else {
             for (ServerPlayer target : targets) {

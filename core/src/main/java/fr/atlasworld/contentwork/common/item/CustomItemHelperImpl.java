@@ -30,12 +30,15 @@ public class CustomItemHelperImpl implements CustomItemHelper {
         meta.setCustomModelData((int) this.registry.getCustomModel(itemKey));
         item.appendTooltip(meta.lore());
 
+        stack.setItemMeta(meta);
+
         net.minecraft.world.item.ItemStack internalStack = CraftItemStack.asNMSCopy(stack);
+
         CompoundTag tag = internalStack.getOrCreateTag();
         tag.putString("customItem", itemKey.asString());
+        internalStack.setTag(tag);
 
-        stack.setItemMeta(meta);
-        return stack;
+        return internalStack.getBukkitStack();
     }
 
     @Override
